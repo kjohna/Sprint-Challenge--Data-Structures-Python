@@ -7,19 +7,31 @@ start_time = time.time()
 # names_1 = f.read().split("\n")  # List containing 10000 names
 # f.close()
 
-f = open('names_2.txt', 'r')
-names_2 = f.read().split("\n")  # List containing 10000 names
-f.close()
+# # from Orig and first try
+# f = open('names_2.txt', 'r')
+# names_2 = f.read().split("\n")  # List containing 10000 names
+# f.close()
 
 duplicates = []
 
-# # first try - 0.009s
+# # second try - 0.008s
+# avoids storing all of names_2 in memory
 with open('names_1.txt') as f:
     names_1 = set(line.strip() for line in f)
 
-for name_2 in names_2:
-    if name_2 in names_1:
-        duplicates.append(name_2)
+with open('names_2.txt') as f:
+    for line in f:
+        name_2 = line.strip()
+        if name_2 in names_1:
+            duplicates.append(name_2)
+
+# # first try - 0.009s
+# with open('names_1.txt') as f:
+#     names_1 = set(line.strip() for line in f)
+
+# for name_2 in names_2:
+#     if name_2 in names_1:
+#         duplicates.append(name_2)
 
 # # Orig - 8.643s
 # for name_1 in names_1:
